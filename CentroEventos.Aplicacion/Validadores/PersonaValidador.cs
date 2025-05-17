@@ -1,38 +1,46 @@
 using System;
+using System.ComponentModel;
+using System.Threading.Tasks.Dataflow;
 
 namespace CentroEventos.Aplicacion;
 
 public class PersonaValidador(IRepositorioPersona repositorio)
-{
-public bool Validar(Persona persona, out string mensajeError){//Decirle a belen que lo cambie que la interfaz no va en el parametro del metodo
-        mensajeError = "";                                    // si no va en el constructor primario.
-        if(string.IsNullOrWhiteSpace(persona.Nombre)){
+{//Decirle a belen que lo cambie que la interfaz no va en el parametro del metodo
+ // si no va en el constructor primario.
+    public bool ValidarNombre(string nombre)
+    {
+        return !(string.IsNullOrWhiteSpace(nombre));
+    }
+    public bool ValidarApellido(string apellido)
+    {
 
-            mensajeError += "Nombre del persona inválido.\n";
-        }
+        return !(string.IsNullOrWhiteSpace(apellido));
 
-        if(string.IsNullOrWhiteSpace(persona.Apellido)){
+    }
 
-            mensajeError += "Apellido del persona inválido.\n";
-        }
+    public bool ValidarDNI(string dni)
+    {
 
-        if(string.IsNullOrWhiteSpace(persona.DNI)){
+        return !(string.IsNullOrWhiteSpace(dni));
+    }
+    public bool ValidarEmail(string email)
+    {
 
-            mensajeError += "DNI del persona inválido.\n";
-        }
-        else if (repositorio.ExisteDNI(persona.DNI)){
-            mensajeError += "El DNI ya está registrado en otra persona.\n";
-        }
+        return !(string.IsNullOrWhiteSpace(email));
+    }
 
-        if(string.IsNullOrWhiteSpace(persona.Email)){
+    public bool ValidarExisteEmail(string email)
+    {
+        return repositorio.ExisteEmail(email);
+    }
 
-            mensajeError += "Email del persona inválido.\n";
-        }
-        else if (repositorio.ExisteEmail(persona.Email)){
-            
-            mensajeError += "El email ya está registrado en otra persona.\n";
-        }
+    public bool ValidarExisteDni(string dni)
+    {
+        return repositorio.ExisteDNI(dni);
+    }
 
-        return (mensajeError == "");
+    public bool ValidarExiste(int id)//validacion solo para el eliminar y modificar
+    {
+        return repositorio.ExisteId(id);
     }
 }

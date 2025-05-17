@@ -78,7 +78,7 @@ public class RepositorioPersonaTXT : IRepositorioPersona
     }*/
     public void ActualizarPersona(Persona ed){
         Boolean encontrado = false;
-        using var sr = new StreamReader(_nombreArch);
+        using var sr =  new StreamReader(_nombreArch);
         using var sw = new StreamWriter ("archivoTemporal.TXT");
         var temp = new Persona();
         while (!sr.EndOfStream){

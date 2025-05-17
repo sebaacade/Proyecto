@@ -1,26 +1,41 @@
 using System;
+using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion;
 
-public class EventoDeportivoValidador(IRepositorioPersona repo)
+public class EventoDeportivoValidador(IRepositorioEventoDeportivo repo,IRepositorioPersona r)
 {
-    public bool Validar(EventoDeportivo evento,out String mensaje){
-        mensaje="";
-        if(string.IsNullOrWhiteSpace(evento.Nombre)){
-            mensaje+="ERROR. No se puede ingresar un nombre vacio.\n";
-        }
-        if(string.IsNullOrWhiteSpace(evento.Descripcion)){
-            mensaje+="ERROR. No se puede ingresar una descripcion vacia.\n";
-        }
-        if(evento.FechaHoraInicio<DateTime.Now){
-            mensaje+="ERROR. La fecha tiene que ser actual o posterior.\n";
-        }
-        if(evento.DuracionHoras<=0){
-            mensaje+="ERROR. La duracion debe ser mayor a cero.\n";
-        }
-        if(!repo.ExisteId(evento.ResponsableId)){
-            mensaje+="ERROR. El responsable no corresponde a una persona existenete.\n";
-        }
-        return (mensaje=="");
+    public bool ValidarNombre(string nombre)
+    {
+        return !(string.IsNullOrWhiteSpace(nombre));
+    }
+    public bool ValidarDescripcion(string descripcion)
+    {
+        return !(string.IsNullOrWhiteSpace(descripcion));
+    }
+    public bool ValidarCupoMaximo(int n)
+    {
+        return (n > 0);
+    }
+    public bool ValidarFecha(DateTime fecha)
+    {
+        return !(fecha < DateTime.Now);
+    }
+    public bool ValidarDuracion(double duracion)
+    {
+        return !(duracion <= 0);
+    }
+    public bool ValidarResponsable(int id)
+    {
+        return r.ExisteId(id);
+    }
+    public bool ValidarExiste(int id)//unicamente para el modificar y eliminar
+    {
+        return repo.ExisteId(id);
+    }
+    public bool ValidarSiExpiro(int id)
+    {
+        return repo.Expiro(id);
     }
 }
+
