@@ -9,12 +9,12 @@ namespace CentroEventos.Repositorios;
 public class RepositorioReservaTXT : IRepositorioReserva
 {
     readonly string _nombreArch = "reservas.txt";
-    readonly string _archivoIds = "IDsReservas.txt";
+    readonly string _archivoIds = "reservas_ids.txt";
     private int _idUltimo;
     public RepositorioReservaTXT()
     {
-        using var sr = new StreamReader(_archivoIds);
-        _idUltimo = int.Parse(sr.ReadToEnd());
+        using var sw = new StreamWriter(_archivoIds);
+        sw.WriteLine("0");
     }
     public List<Reserva> ListarReserva()
     {
@@ -169,4 +169,44 @@ public class RepositorioReservaTXT : IRepositorioReserva
         }
         return false;
     }
+     public bool EventoTieneReservaAsociada(int Id)
+    {
+        List<Reserva> listaReservas = ListarReserva();
+
+        int i = 0;
+        bool encontre = false;
+
+        //Recorro a la list de reservas, buscando si exista alguna que tenga el mismo EventoDeportivoId
+        while (i < listaReservas.Count && !encontre)
+        {
+            if (listaReservas[i].EventoDeportivoId == Id)
+            {
+                encontre = true;
+            }
+            i++;
+        }
+
+        return encontre;
+    }
+
+    public bool PersonaTieneReservaAsociada(int Id)
+    {
+        List<Reserva> listaReservas = ListarReserva();
+
+        int i = 0;
+        bool encontre = false;
+
+        //Recorro a la list de reservas, buscando si exista alguna que tenga el mismo PersonaId
+        while (i < listaReservas.Count && !encontre)
+        {
+            if (listaReservas[i].PersonaId == Id)
+            {
+                encontre = true;
+            }
+            i++;
+        }
+
+        return encontre;
+    }
+
 }

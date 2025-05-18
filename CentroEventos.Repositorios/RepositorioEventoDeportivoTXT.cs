@@ -8,14 +8,14 @@ namespace CentroEventos.Repositorios;
 
 public class RepositorioEventoDeportivoTXT : IRepositorioEventoDeportivo
 {
-    readonly string _nombreArchivo = "personas.txt";
-    readonly string _archivoIds = "IDs.txt";
+    readonly string _nombreArchivo = "eventos.txt";
+    readonly string _archivoIds = "eventos_ids.txt";
     private int _idUltimo;
 
     public RepositorioEventoDeportivoTXT()
     {
-        using var sr = new StreamReader(_archivoIds);
-        _idUltimo = int.Parse(sr.ReadToEnd());///ESTA BIEN? NO HAY QUE USAR UN STATIC?constructor
+        using var sw = new StreamWriter(_archivoIds);
+        sw.WriteLine("0");
     }
     public List<EventoDeportivo> ListarEventoDeportivo()
     {//MODIFICADO POR LA BAJA LOGICA
@@ -177,4 +177,35 @@ public class RepositorioEventoDeportivoTXT : IRepositorioEventoDeportivo
         }
         return false;
     }
+    public EventoDeportivo BuscarEvento(int id)// no se si esta bien
+    {
+        foreach (EventoDeportivo p in this.ListarEventoDeportivo())
+        {
+            if (p.Id == id)
+            {
+                return p;
+            }
+        }
+        return null;//ESTA BIEN RETORNAR NULL? o retorno una persona si o si?
+    }
+     public bool EsResponsableDeEventoDeportivo(int Id)
+    {
+        List<EventoDeportivo> listaEventos = ListarEventoDeportivo();
+
+        int i = 0;
+        bool encontre = false;
+
+        //Recorro a la list de eventos deportivos, buscando si exista alguno que tenga el mismo ResponsableId
+        while (i < listaEventos.Count && !encontre)
+        {
+            if (listaEventos[i].ResponsableId == Id)
+            {
+                encontre = true;
+            }
+            i++;
+        }
+
+        return encontre;
+    }
+
 }

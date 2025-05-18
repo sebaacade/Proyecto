@@ -3,14 +3,20 @@ using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion.Eliminar;
 
-public class EliminarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador)
+public class EliminarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador,IServicioAutorizacion autorizacion)
 {
-    public void Ejecutar(int id){ 
-        if(!validador.ValidarExiste(id)){
+    public void Ejecutar(int IdUsuario,int id){
+        if (!autorizacion.PoseeElPermiso(IdUsuario, Permisos.EventoBaja))
+        {
+            throw new FalloAutorizacionException("Usuario no tiene Autorizacion");
+        } 
+        if (!validador.ValidarExiste(id))
+        {
             throw new EntidadNotFoundException("El evento que se intenta elimnar no esta registrado.");
         }
-        //la excepcion que falta es de regla de negocio
-        //BELEN CREO QUE LO HIZO
+         if(!validador.ValidarNoTieneReservaAsociada(id)){
+            throw new OperacionInvalidaException("El evento que se intenta eliminar cuenta con al menos una reserva asociada.");
+        }
         repo.EliminarEventoDeportivo(id);
     }
 }

@@ -12,5 +12,7 @@ public interface IRepositorioEventoDeportivo
     public bool ExisteId(int id);
     public int DevolverCupoMaximo(int id);
     public bool Expiro(int id);
+    public EventoDeportivo BuscarEvento(int id);
+    public bool EsResponsableDeEventoDeportivo(int id);
 
 }

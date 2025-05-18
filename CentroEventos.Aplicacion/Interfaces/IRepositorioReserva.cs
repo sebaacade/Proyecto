@@ -11,4 +11,7 @@ public interface IRepositorioReserva
     public bool Reservo(int idP, int idE);
     public int CantidadDeReservas(int id);//devuelve la cantidad de personas que reservaron en un evento cuyo id se pasa por parametro
     public bool ExisteId(int id);
+    public bool PersonaTieneReservaAsociada(int id);
+    public bool EventoTieneReservaAsociada(int id);
+
 }

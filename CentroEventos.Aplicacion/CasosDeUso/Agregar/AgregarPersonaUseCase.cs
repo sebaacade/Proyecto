@@ -3,22 +3,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CentroEventos.Aplicacion.Agregar;
 
-public class AgregarPersonaUseCase(IRepositorioPersona repo,PersonaValidador validador)
+public class AgregarPersonaUseCase(IRepositorioPersona repo,PersonaValidador validador,IServicioAutorizacion autorizacion)
 {
-    public void Ejecutar(Persona p){
-        if (validador.ValidarNombre(p.Nombre))
+    public void Ejecutar(int IdUsuario,Persona p){
+        if (!autorizacion.PoseeElPermiso(IdUsuario, Permisos.UsarioAlta))
+        {
+            throw new FalloAutorizacionException("Usuario no tiene Autorizacion");
+        }
+        if (!validador.ValidarNombre(p.Nombre))
         {
             throw new ValidacionException("No se ingreso el nombre de la Persona");
         }
-        if (validador.ValidarApellido(p.Apellido))
+        if (!validador.ValidarApellido(p.Apellido))
         {
             throw new ValidacionException("No se ingreso el apellido de la Persona");
         }
-        if (validador.ValidarDNI(p.DNI))
+        if (!validador.ValidarDNI(p.DNI))
         {
             throw new ValidacionException("No se ingreso el DNI de la Persona");
         }
-        if (validador.ValidarEmail(p.Email))
+        if (!validador.ValidarEmail(p.Email))
         {
             throw new ValidacionException("No se ingreso el Email de la Persona");
         }

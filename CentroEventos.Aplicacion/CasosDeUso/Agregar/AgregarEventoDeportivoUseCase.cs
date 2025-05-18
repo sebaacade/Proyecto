@@ -4,11 +4,16 @@ using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion.Agregar;
 
-public class AgregarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador)
+public class AgregarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador,IServicioAutorizacion autorizacion)
 {
-    public void Ejecutar(EventoDeportivo e){
+    public void Ejecutar(int IdUsuario,EventoDeportivo e){
         //tira una exepcion que se propaga al main donde se lo llama y se lo atrapa con dicho catch.?
-        if (!validador.ValidarNombre(e.Nombre)) {
+        if (!autorizacion.PoseeElPermiso(IdUsuario, Permisos.EventoAlta))
+        {
+            throw new FalloAutorizacionException("Usuario no tiene Autorizacion");
+        }
+        if (!validador.ValidarNombre(e.Nombre))
+        {
             throw new ValidacionException("No se ingreso el nombre del evento.");
         }
         if (!validador.ValidarDescripcion(e.Descripcion))

@@ -4,9 +4,13 @@ using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion.Actualizar;
 
-public class ActualizarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador)
+public class ActualizarEventoDeportivoUseCase(IRepositorioEventoDeportivo repo,EventoDeportivoValidador validador,IServicioAutorizacion autorizacion)
 {
-    public void Ejecutar(EventoDeportivo e){
+    public void Ejecutar(int IdUsuario,EventoDeportivo e){
+        if (!autorizacion.PoseeElPermiso(IdUsuario, Permisos.EventoModificacion))
+        {
+            throw new FalloAutorizacionException("Usuario no tiene Autorizacion");
+        }
         if (!validador.ValidarExiste(e.Id))
         {
             throw new EntidadNotFoundException("El evento deportivo que se quiere actualizar no existe");

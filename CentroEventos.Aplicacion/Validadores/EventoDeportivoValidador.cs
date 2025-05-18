@@ -3,7 +3,7 @@ using CentroEventos.Aplicacion.Excepciones;
 
 namespace CentroEventos.Aplicacion;
 
-public class EventoDeportivoValidador(IRepositorioEventoDeportivo repo,IRepositorioPersona r)
+public class EventoDeportivoValidador(IRepositorioEventoDeportivo repo, IRepositorioPersona r,IRepositorioReserva repoReserva)
 {
     public bool ValidarNombre(string nombre)
     {
@@ -36,6 +36,9 @@ public class EventoDeportivoValidador(IRepositorioEventoDeportivo repo,IReposito
     public bool ValidarSiExpiro(int id)
     {
         return repo.Expiro(id);
+    }
+    public bool ValidarNoTieneReservaAsociada(int id){
+        return !repoReserva.EventoTieneReservaAsociada(id);
     }
 }
 
