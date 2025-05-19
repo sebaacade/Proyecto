@@ -51,8 +51,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-              "projectPath": "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+            "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+              "projectPath": "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
             }
           }
         }

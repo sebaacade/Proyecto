@@ -1,3 +1,6 @@
 2|48765432|María|Gómez|555‑4321|maria.gomez@example.com
 3|24680135|Carlos|López|555‑2468|carlos.lopez@example.com
 4|12344332|Diego|Sosa|666-432|diego.sosa@example.com
+5|6745135|Mayra|Mitma|555‑2468|mitma.TeQuieroMejorAmiga@example.com
+6|13579246|Matias|Martínez|555‑1357|mati.gomez@example.com
+7|543543|German|Sosa|884‑9876|German.sosa@example.com

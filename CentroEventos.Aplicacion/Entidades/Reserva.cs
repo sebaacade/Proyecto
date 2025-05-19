@@ -17,6 +17,6 @@ public class Reserva
     public Asistencia EstadoAsistencia{get;set;}
 
     public override string ToString(){
-        return $"ID:{Id}, PersonaId(id de la persona que concreto la reserva): {PersonaId}, EventoDeportivo(id del evento que se reservo):{EventoDeportivoId}, Fecha y Hora:{FechaAltaReserva}, Asistencia:{EstadoAsistencia}";
+        return $"ID:{Id}, PersonaId: {PersonaId}, EventoDeportivo:{EventoDeportivoId}, Fecha y Hora:{FechaAltaReserva}, Asistencia:{EstadoAsistencia}";
     }
 }

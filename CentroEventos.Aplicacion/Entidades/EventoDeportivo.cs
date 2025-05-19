@@ -13,6 +13,6 @@ public class EventoDeportivo
     public int ResponsableId{get;set;}//id de la persona a cargo del evento
 
     public override string ToString(){
-        return $"id:{Id}, Nombre:{Nombre}, Descripcion:{Descripcion}, FechaHoraInicio:{FechaHoraInicio}, DuracionHoras{DuracionHoras},";
+        return $"id:{Id}, Nombre:{Nombre}, Descripcion:{Descripcion}, FechaHoraInicio:{FechaHoraInicio}, DuracionHoras:{DuracionHoras},";
     }
 }

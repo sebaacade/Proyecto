@@ -32,57 +32,51 @@ public class RepositorioReservaTXT : IRepositorioReserva
         }
         return resultado;
     }
-    public void AgregarReserva(Reserva r)
+
+    public void AgregarReserva(Reserva p)
     {
         _idUltimo++;
-        r.Id = _idUltimo;//decirle a belen que cambie la linea de codigo
+        p.Id = _idUltimo;//decirle a belen que cambie la linea de codigo
         using var sw2 = new StreamWriter(_archivoIds, false);
         using var sw = new StreamWriter(_nombreArch, true);
-
-        // Crear una lista de los campos comunes
-        var campos = new List<string>
-        {
-            "ID: "+r.Id.ToString(),
-            "Persona ID: "+r.PersonaId.ToString(),
-            "Actividad deportiva ID: "+r.EventoDeportivoId.ToString(),
-            r.FechaAltaReserva.ToString(),
-            r.EstadoAsistencia.ToString()
-        };
-
-        // Escribir la línea al archivo, separada por coma
-        sw.WriteLine(string.Join(" - ", campos));
-        sw2.WriteLine(_idUltimo);
+        sw.WriteLine(p.Id);
+        sw.WriteLine(p.PersonaId);
+        sw.WriteLine(p.EventoDeportivoId);
+        sw.WriteLine(p.FechaAltaReserva);
+        sw.WriteLine(p.EstadoAsistencia);
     }
     public void ActualizarReserva(Reserva r)
     {
         Boolean encontrado = false;
-        using var sr = new StreamReader(_nombreArch);
-        using var sw = new StreamWriter("archivoTemporal.TXT");
-        Reserva temp = new Reserva();
-        while (!sr.EndOfStream)
+        using (var sr = new StreamReader(_nombreArch))
+        using (var sw = new StreamWriter("archivoTemporal.TXT"))
         {
-            temp.Id = int.Parse(sr.ReadLine() ?? "");
-            temp.PersonaId = int.Parse(sr.ReadLine() ?? "");
-            temp.EventoDeportivoId = int.Parse(sr.ReadLine() ?? "");
-            temp.FechaAltaReserva = DateTime.Parse(sr.ReadLine() ?? "");
-            temp.EstadoAsistencia = (Reserva.Asistencia)Enum.Parse(typeof(Reserva.Asistencia), sr.ReadLine() ?? "");
+            Reserva temp = new Reserva();
+            while (!sr.EndOfStream)
+            {
+                temp.Id = int.Parse(sr.ReadLine() ?? "");
+                temp.PersonaId = int.Parse(sr.ReadLine() ?? "");
+                temp.EventoDeportivoId = int.Parse(sr.ReadLine() ?? "");
+                temp.FechaAltaReserva = DateTime.Parse(sr.ReadLine() ?? "");
+                temp.EstadoAsistencia = (Reserva.Asistencia)Enum.Parse(typeof(Reserva.Asistencia), sr.ReadLine() ?? "");
 
-            if (temp.Id == r.Id)
-            {
-                sw.WriteLine(r.Id);
-                sw.WriteLine(r.PersonaId);
-                sw.WriteLine(r.EventoDeportivoId);
-                sw.WriteLine(r.FechaAltaReserva);
-                sw.WriteLine(r.EstadoAsistencia);
-                encontrado = true;
-            }
-            else
-            {
-                sw.WriteLine(temp.Id);
-                sw.WriteLine(temp.PersonaId);
-                sw.WriteLine(temp.EventoDeportivoId);
-                sw.WriteLine(temp.FechaAltaReserva);
-                sw.WriteLine(temp.EstadoAsistencia);
+                if (temp.Id == r.Id)
+                {
+                    sw.WriteLine(r.Id);
+                    sw.WriteLine(r.PersonaId);
+                    sw.WriteLine(r.EventoDeportivoId);
+                    sw.WriteLine(r.FechaAltaReserva);
+                    sw.WriteLine(r.EstadoAsistencia);
+                    encontrado = true;
+                }
+                else
+                {
+                    sw.WriteLine(temp.Id);
+                    sw.WriteLine(temp.PersonaId);
+                    sw.WriteLine(temp.EventoDeportivoId);
+                    sw.WriteLine(temp.FechaAltaReserva);
+                    sw.WriteLine(temp.EstadoAsistencia);
+                }
             }
         }
         if (!encontrado)
@@ -92,45 +86,48 @@ public class RepositorioReservaTXT : IRepositorioReserva
         }
         else
         {
-            File.Delete(_nombreArch);
+                File.Delete("reservas.txt");
             File.Move("archivoTemporal.TXT", _nombreArch);
-        }
+            }
     }
     public void EliminarReserva(int Id)
     {
         bool encontre = false;
-        using var sr = new StreamReader(_nombreArch);//lo voy a usar para ir leyendo todo mi archivo.
-        using var sw = new StreamWriter("temporal.txt", false);// SIEMPRE EN FALSE YA QUE SI NO POR CADA LLAMADA SE SIGUE SOBREESCRIBIENDO 
-        while (!sr.EndOfStream)
+        using (var sr = new StreamReader(_nombreArch))//lo voy a usar para ir leyendo todo mi archivo.
+        using (var sw = new StreamWriter("temporal.txt", false))
         {
-            List<string> l = new List<string>();// creo una lista para ir guardo los strign que leo y ver si encontre mi id accediendo a l[0].
-            for (int i = 0; i < 7; i++)
+            // SIEMPRE EN FALSE YA QUE SI NO POR CADA LLAMADA SE SIGUE SOBREESCRIBIENDO 
+            while (!sr.EndOfStream)
             {
-                l.Add(sr.ReadLine() ?? "");//voy guardando las lineas que leo a la lista de strings.
-            }
-            if (!(int.Parse(l[0].ToString()) == Id))
-            {
-                foreach (string e in l)
+                List<string> l = new List<string>();// creo una lista para ir guardo los strign que leo y ver si encontre mi id accediendo a l[0].
+                for (int i = 0; i < 5; i++)
                 {
-                    sw.WriteLine(e);//voy escribiendo en mi archivo temporal linea por linea.
+                    l.Add(sr.ReadLine() ?? "");//voy guardando las lineas que leo a la lista de strings.
                 }
+                if (!(int.Parse(l[0].ToString()) == Id))
+                {
+                    foreach (string e in l)
+                    {
+                        sw.WriteLine(e);//voy escribiendo en mi archivo temporal linea por linea.
+                    }
+                }
+                else
+                {
+                    encontre = true;//innecesario unicamente para imprimir si se encontro o no. Podria unicamente siempre pasar el
+                }                 //archivo temporal al verdadero archivo y listo, pero lo haria innecesariamente. 
+            }
+        }
+        if (encontre)
+            {
+                Console.WriteLine("Se elimino con exito el evento");
+                File.Delete(_nombreArch);//borro el archivo ya que no me sirve mas.
+                File.Move("temporal.txt", _nombreArch);//hago el intercambio con el archivo temporal.
             }
             else
             {
-                encontre = true;//innecesario unicamente para imprimir si se encontro o no. Podria unicamente siempre pasar el
-            }                 //archivo temporal al verdadero archivo y listo, pero lo haria innecesariamente. 
-        }
-        if (encontre)
-        {
-            Console.WriteLine("Se elimino con exito el evento");
-            File.Delete(_nombreArch);//borro el archivo ya que no me sirve mas.
-            File.Move("temporal.txt", _nombreArch);//hago el intercambio con el archivo temporal.
-        }
-        else
-        {
-            Console.WriteLine("No se encontro el evento a eliminar");
-            File.Delete("temporal.txt");//borro el archivo temporal si no lo encontre.
-        }
+                Console.WriteLine("No se encontro el evento a eliminar");
+                File.Delete("temporal.txt");//borro el archivo temporal si no lo encontre.
+            }
     }
     public bool Reservo(int idP, int idE)
     {

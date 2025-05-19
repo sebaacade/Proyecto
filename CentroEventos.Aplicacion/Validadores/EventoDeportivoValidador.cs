@@ -19,7 +19,7 @@ public class EventoDeportivoValidador(IRepositorioEventoDeportivo repo, IReposit
     }
     public bool ValidarFecha(DateTime fecha)
     {
-        return !(fecha < DateTime.Now);
+        return (fecha >= DateTime.Now);
     }
     public bool ValidarDuracion(double duracion)
     {
