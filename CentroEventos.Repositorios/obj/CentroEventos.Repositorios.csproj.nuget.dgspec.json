@@ -4,14 +4,14 @@
     "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Repositorios\\CentroEventos.Repositorios.csproj": {}
   },
   "projects": {
-    "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+    "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "projectUniqueName": "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
         "projectName": "CentroEventos.Aplicacion",
-        "projectPath": "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
+        "projectPath": "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj",
         "packagesPath": "C:\\Users\\sebas\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
+        "outputPath": "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sebas\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -85,8 +85,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
-                "projectPath": "c:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
+              "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj": {
+                "projectPath": "C:\\Users\\sebas\\Desktop\\Proyecto\\CentroEventos\\CentroEventos.Aplicacion\\CentroEventos.Aplicacion.csproj"
               }
             }
           }

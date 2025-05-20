@@ -1,28 +1,21 @@
 1
 Evento de informartica
 Este evento es uno de los mejores 3 en el country
-19/5/2025 09:43:18
+29/5/2025 23:13:11
 2
 200
 2
-*2
+2
 Evento de Medicina
 Este evento es el favorito de todos
-19/5/2025 09:43:18
+22/5/2025 23:13:11
 3
 150
 6
 3
-Evento de Economia
-Este evento tiene mala reputacion
-19/5/2025 09:43:18
-4
-300
-3
-4
 Evento de Artes
 Este evento esta lleno de vagos
-19/5/2025 09:43:18
+20/5/2025 07:13:11
 1
 20
 4

@@ -140,7 +140,7 @@ try
         DNI      = "6745135",
         Nombre   = "Mayra",
         Apellido = "Mitma",
-        Email    = "mitma.TeQuieroMejorAmiga@example.com",
+        Email    = "mitma.3252@example.com",
         Telefono = "555‑2468"
     });
 }
@@ -188,48 +188,6 @@ foreach (Persona p in ListarPersona.Ejecutar())
 }
 
 
-//ELIMINAR PERSONA FUNCIONA DE FORMA CORRECTA.
-//FALTA PROBAR QUE LA PERSONA A ELIMINAR NO TENGAS RESERVAS NI SEA RESPONSABLE DE UN EVENTO.
-try
-{
-    EliminarPersona.Ejecutar(1, 1);
-}
-catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
-catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
-catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
-
-
-//PRUEBO EL LISTAR DE PERSONA, FUNCIONA DE FORMA CORRECTA.
-Console.WriteLine();Console.WriteLine();
-Console.WriteLine("---------------LISTA DE LAS PERSONAS DESPUES DE ELIMINAR--------------");
-foreach (Persona p in ListarPersona.Ejecutar())
-{
-    Console.WriteLine(p.ToString());
-}
-// actualizar Persona
-
-try
-{
-    ModificarPersona.Ejecutar(1, new Persona
-    {
-        Id=4,// a la hora de actualizar tengo que agregar si o si el id.
-        DNI = "12344332",        
-        Nombre = "Diego",
-        Apellido = "Sosa",
-        Email = "diego.sosa@example.com",
-        Telefono = "666-432"
-    });
-}
-catch (FalloAutorizacionException ex) {Console.WriteLine(ex.Message);}
-catch (EntidadNotFoundException ex) {Console.WriteLine(ex.Message);}
-//PRUEBO EL LISTAR DE PERSONA, FUNCIONA DE FORMA CORRECTA.
-Console.WriteLine();Console.WriteLine();
-Console.WriteLine("---------------LISTA DE LAS PERSONAS DESPUES DE ACTUALIZAR--------------");
-foreach (Persona p in ListarPersona.Ejecutar())
-{
-    Console.WriteLine(p.ToString());
-}
-
 
 
 
@@ -247,7 +205,7 @@ try
     {
         Nombre = "Evento de informartica",
         Descripcion = "Este evento es uno de los mejores 3 en el country",
-        FechaHoraInicio = DateTime.Now,
+        FechaHoraInicio = DateTime.Now.AddDays(10),
         DuracionHoras = 2,
         CupoMaximo = 200,
         ResponsableId = 2
@@ -262,7 +220,7 @@ try
     {
         Nombre = "Evento de Medicina",
         Descripcion = "Este evento es el favorito de todos",
-        FechaHoraInicio = DateTime.Now,
+        FechaHoraInicio = DateTime.Now.AddDays(3),
         DuracionHoras = 3,
         CupoMaximo = 150,
         ResponsableId = 6
@@ -273,13 +231,14 @@ catch (ValidacionException ex) { Console.WriteLine(ex.Message); }
 catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
 try
 {
-    AgregarEvento.Ejecutar(1, new EventoDeportivo
+    DateTime f = DateTime.Now;
+    AgregarEvento.Ejecutar(1, new EventoDeportivo()
     {
         Nombre = "Evento de Economia",
         Descripcion = "Este evento tiene mala reputacion",
-        FechaHoraInicio = DateTime.Now,
+        FechaHoraInicio = f,
         DuracionHoras = 4,
-        CupoMaximo = 300,
+        CupoMaximo = 1,
         ResponsableId = 3
     });
 }
@@ -292,7 +251,7 @@ try
     {
         Nombre = "Evento de Artes",
         Descripcion = "Este evento esta lleno de vagos",
-        FechaHoraInicio = DateTime.Now,//si  ponga una fecha superior me tira error
+        FechaHoraInicio = DateTime.Now.AddHours(8),//si  ponga una fecha superior me tira error
         DuracionHoras = 1,
         CupoMaximo = 20,
         ResponsableId = 4
@@ -309,44 +268,7 @@ foreach (EventoDeportivo e in ListarEvento.Ejecutar())
     Console.WriteLine(e.ToString());
 }
 
-// actulizar Evento
 
-try
-{
-    ModificarEvento.Ejecutar(1, new EventoDeportivo
-    {
-        Id=3,
-        Nombre = "Evento de Economia",
-        Descripcion = "Este evento tiene mala reputacion",
-        FechaHoraInicio = DateTime.Now.AddHours(3),// me dice que los eventos ya ocurrieon pero no me deja definirlas fechas que no sean .now
-        DuracionHoras = 1,
-        CupoMaximo = 500,
-        ResponsableId = 4
-    });
-}
-catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
-catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
-catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
-Console.WriteLine();Console.WriteLine();
-Console.WriteLine("------------LISTA DE EVENTOS DESPUES DE ACTUALIZAR--------------");
-foreach (EventoDeportivo e in ListarEvento.Ejecutar())
-{
-    Console.WriteLine(e.ToString());
-}
-//Eliminar evento
-try
-{
-    EliminarEvento.Ejecutar(1, 2);
-}
-catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
-catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
-catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
-Console.WriteLine();Console.WriteLine();
-Console.WriteLine("------------LISTA DE EVENTOS DESPUES DE ELIMINAR--------------");
-foreach (EventoDeportivo e in ListarEvento.Ejecutar())
-{
-    Console.WriteLine(e.ToString());
-}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -404,7 +326,7 @@ try
         PersonaId = 2,
         EventoDeportivoId = 3,
         FechaAltaReserva = DateTime.Now,
-        EstadoAsistencia= Reserva.Asistencia.Ausente
+        EstadoAsistencia= Reserva.Asistencia.Presente
     });
 }
 catch (FalloAutorizacionException ex){Console.WriteLine(ex.Message);}
@@ -419,13 +341,112 @@ foreach (Reserva r in ListarReserva.Ejecutar())
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//ELIMINAR PERSONA FUNCIONA DE FORMA CORRECTA.
+//FALTA PROBAR QUE LA PERSONA A ELIMINAR NO TENGAS RESERVAS NI SEA RESPONSABLE DE UN EVENTO.
+try
+{
+    EliminarPersona.Ejecutar(1, 56);
+}
+catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
+catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
+catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
+
+
+//PRUEBO EL LISTAR DE PERSONA, FUNCIONA DE FORMA CORRECTA.
+Console.WriteLine();Console.WriteLine();
+Console.WriteLine("---------------LISTA DE LAS PERSONAS DESPUES DE ELIMINAR--------------");
+foreach (Persona p in ListarPersona.Ejecutar())
+{
+    Console.WriteLine(p.ToString());
+}
+// actualizar Persona
+
+try
+{
+    ModificarPersona.Ejecutar(1, new Persona
+    {
+        Id=54,// a la hora de actualizar tengo que agregar si o si el id.
+        DNI = "12344332",        
+        Nombre = "Diego",
+        Apellido = "Sosa",
+        Email = "diego.sosa@example.com",
+        Telefono = "666-432"
+    });
+}
+catch (FalloAutorizacionException ex) {Console.WriteLine(ex.Message);}
+catch (EntidadNotFoundException ex) {Console.WriteLine(ex.Message);}
+//PRUEBO EL LISTAR DE PERSONA, FUNCIONA DE FORMA CORRECTA.
+Console.WriteLine();Console.WriteLine();
+Console.WriteLine("---------------LISTA DE LAS PERSONAS DESPUES DE ACTUALIZAR--------------");
+foreach (Persona p in ListarPersona.Ejecutar())
+{
+    Console.WriteLine(p.ToString());
+}
+
+// actulizar Evento
+
+try
+{
+    ModificarEvento.Ejecutar(1, new EventoDeportivo
+    {
+        Id=45,
+        Nombre = "Evento de Economia",
+        Descripcion = "Este evento tiene mala reputacion",
+        FechaHoraInicio = DateTime.Now.AddHours(3),// me dice que los eventos ya ocurrieon pero no me deja definirlas fechas que no sean .now
+        DuracionHoras = 1,
+        CupoMaximo = 1,
+        ResponsableId = 4
+    });
+}
+catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
+catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
+catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
+Console.WriteLine();Console.WriteLine();
+Console.WriteLine("------------LISTA DE EVENTOS DESPUES DE ACTUALIZAR--------------");
+foreach (EventoDeportivo e in ListarEvento.Ejecutar())
+{
+    Console.WriteLine(e.ToString());
+}
+//Eliminar evento
+try
+{
+    EliminarEvento.Ejecutar(1, 56);
+}
+catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
+catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }
+catch (OperacionInvalidaException ex) { Console.WriteLine(ex.Message); }
+Console.WriteLine();Console.WriteLine();
+Console.WriteLine("------------LISTA DE EVENTOS DESPUES DE ELIMINAR--------------");
+foreach (EventoDeportivo e in ListarEvento.Ejecutar())
+{
+    Console.WriteLine(e.ToString());
+}
+
+
 // actulizar Reserva
 
 try
 {
     ModificarReserva.Ejecutar(1, new Reserva
     {
-        Id = 3,
+        Id = 56,
         PersonaId = 3,
         EventoDeportivoId = 1,
         FechaAltaReserva=DateTime.Now,//LA HORA SE MODIFICA? CONSULTAR
@@ -444,7 +465,7 @@ foreach (Reserva r in ListarReserva.Ejecutar())
 
 try
 {
-    EliminarReserva.Ejecutar(1,2);
+    EliminarReserva.Ejecutar(1,56);
 }
 catch (FalloAutorizacionException ex) { Console.WriteLine(ex.Message); }
 catch (EntidadNotFoundException ex) { Console.WriteLine(ex.Message); }

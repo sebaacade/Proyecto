@@ -119,13 +119,13 @@ public class RepositorioReservaTXT : IRepositorioReserva
         }
         if (encontre)
             {
-                Console.WriteLine("Se elimino con exito el evento");
+                Console.WriteLine("Se elimino con exito la reserva");
                 File.Delete(_nombreArch);//borro el archivo ya que no me sirve mas.
                 File.Move("temporal.txt", _nombreArch);//hago el intercambio con el archivo temporal.
             }
             else
             {
-                Console.WriteLine("No se encontro el evento a eliminar");
+                Console.WriteLine("No se encontro la reserva a eliminar");
                 File.Delete("temporal.txt");//borro el archivo temporal si no lo encontre.
             }
     }

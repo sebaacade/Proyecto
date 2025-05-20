@@ -100,50 +100,52 @@ public class RepositorioEventoDeportivoTXT : IRepositorioEventoDeportivo
     public void ActualizarEventoDeportivo(EventoDeportivo ed)
     {
         Boolean encontrado = false;
-        using var sr = new StreamReader(_nombreArchivo);
-        using var sw = new StreamWriter("archivoTemporal.TXT");
-        EventoDeportivo temp = new EventoDeportivo();
-        while (!sr.EndOfStream)
+        using (var sr = new StreamReader(_nombreArchivo))
+        using (var sw = new StreamWriter("archivoTemporal.TXT"))
         {
-            temp.Id = int.Parse(sr.ReadLine() ?? "");
-            temp.Nombre = sr.ReadLine() ?? "";
-            temp.Descripcion = sr.ReadLine() ?? "";
-            temp.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? "");
-            temp.DuracionHoras = int.Parse(sr.ReadLine() ?? "");
-            temp.CupoMaximo = int.Parse(sr.ReadLine() ?? "");
-            temp.ResponsableId = int.Parse(sr.ReadLine() ?? "");
-            if (temp.Id == ed.Id)
+            EventoDeportivo temp = new EventoDeportivo();
+            while (!sr.EndOfStream)
             {
-                sw.WriteLine(ed.Id);
-                sw.WriteLine(ed.Nombre);
-                sw.WriteLine(ed.Descripcion);
-                sw.WriteLine(ed.FechaHoraInicio);
-                sw.WriteLine(ed.DuracionHoras);
-                sw.WriteLine(ed.CupoMaximo);
-                sw.WriteLine(temp.ResponsableId);
-                encontrado = true;
-            }
-            else
-            {
-                sw.WriteLine(temp.Id);
-                sw.WriteLine(temp.Nombre);
-                sw.WriteLine(temp.Descripcion);
-                sw.WriteLine(temp.FechaHoraInicio);
-                sw.WriteLine(temp.DuracionHoras);
-                sw.WriteLine(temp.CupoMaximo);
-                sw.WriteLine(temp.ResponsableId);
+                temp.Id = int.Parse(sr.ReadLine() ?? "");
+                temp.Nombre = sr.ReadLine() ?? "";
+                temp.Descripcion = sr.ReadLine() ?? "";
+                temp.FechaHoraInicio = DateTime.Parse(sr.ReadLine() ?? "");
+                temp.DuracionHoras = int.Parse(sr.ReadLine() ?? "");
+                temp.CupoMaximo = int.Parse(sr.ReadLine() ?? "");
+                temp.ResponsableId = int.Parse(sr.ReadLine() ?? "");
+                if (temp.Id == ed.Id)
+                {
+                    sw.WriteLine(ed.Id);
+                    sw.WriteLine(ed.Nombre);
+                    sw.WriteLine(ed.Descripcion);
+                    sw.WriteLine(ed.FechaHoraInicio);
+                    sw.WriteLine(ed.DuracionHoras);
+                    sw.WriteLine(ed.CupoMaximo);
+                    sw.WriteLine(temp.ResponsableId);
+                    encontrado = true;
+                }
+                else
+                {
+                    sw.WriteLine(temp.Id);
+                    sw.WriteLine(temp.Nombre);
+                    sw.WriteLine(temp.Descripcion);
+                    sw.WriteLine(temp.FechaHoraInicio);
+                    sw.WriteLine(temp.DuracionHoras);
+                    sw.WriteLine(temp.CupoMaximo);
+                    sw.WriteLine(temp.ResponsableId);
+                }
             }
         }
         if (!encontrado)
-        {
-            File.Delete("archivoTemporal.TXT");
-            Console.WriteLine("Evento no encontrado");
-        }
-        else
-        {
-            File.Delete(_nombreArchivo);
-            File.Move("archivoTemporal.TXT", _nombreArchivo);
-        }
+            {
+                File.Delete("archivoTemporal.TXT");
+                Console.WriteLine("Evento no encontrado");
+            }
+            else
+            {
+                File.Delete(_nombreArchivo);
+                File.Move("archivoTemporal.TXT", _nombreArchivo);
+            }
     }
 
     public bool ExisteId(int id)
